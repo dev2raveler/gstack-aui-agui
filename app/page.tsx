@@ -7,7 +7,7 @@ import {
   Suggestions,
 } from "@assistant-ui/react";
 import { Thread } from "@/components/assistant-ui/thread";
-import { PlusIcon } from "lucide-react";
+import { ThreadList } from "@/components/assistant-ui/thread-list";
 
 function BrowserAlertTool() {
   useAssistantTool<{ message: string }, { status: string }>({
@@ -48,21 +48,6 @@ function BrowserAlertTool() {
   return null;
 }
 
-function NewThreadButton() {
-  const aui = useAui();
-
-  return (
-    <button
-      type="button"
-      onClick={() => aui.threads().switchToNewThread()}
-      className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-lg border bg-background px-3 py-2 font-medium text-sm shadow-sm transition-colors hover:bg-accent"
-    >
-      <PlusIcon className="size-4" />
-      New Thread
-    </button>
-  );
-}
-
 function ThreadWithSuggestions() {
   const aui = useAui({
     suggestions: Suggestions([
@@ -87,9 +72,11 @@ function ThreadWithSuggestions() {
 
 export default function Home() {
   return (
-    <main className="relative h-dvh">
-      <NewThreadButton />
-      <ThreadWithSuggestions />
+    <main className="flex h-dvh">
+      <ThreadList />
+      <div className="relative flex-1 overflow-hidden">
+        <ThreadWithSuggestions />
+      </div>
       <BrowserAlertTool />
     </main>
   );
